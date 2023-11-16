@@ -50,12 +50,7 @@
       border-radius: 5px;
   }
 
-  .article__comment-user{
-    width: 50px;
-    height: 50px  ;
-    background-color: green;
-    border-radius: 50%;
-  }
+
 
   .article__comment-wrapper{
     display: flex;
@@ -64,4 +59,29 @@
     flex: 1;
     gap: 10px;
   }
+}
+
+.article__comment-item{
+  display: flex;
+  align-items: center;
+  gap: 0px 20px;
+  box-shadow: 0 0 10px gray;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+}
+.article__comment-user{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px  ;
+  font-size: 40px;
+  color: #000000;
+  font-family: var(--source-pro);
+  background-color: green;
+  border-radius: 50%;
+  border: 2px solid var(--p-bg-dark);
+  background-color: var(--p-bg-color);
+  text-transform: uppercase;
 }
