@@ -5,6 +5,7 @@ import { useValue } from "../../context/AppProvider"
 import instance from '../../services/api';
 import { Button, Container, SingleCardSkeleton } from '../../utils/index';
 import "./Article.scss";
+import parse from 'html-react-parser'
 
 const Article = () => {
   const [state] = useValue()
@@ -61,7 +62,7 @@ const Article = () => {
           <img src={data.image} alt="picture" />
           <p>{data.title}</p>
 
-          <p>{data.description}</p>
+          <p>{parse(data.description)}</p>
         </div> :
         <SingleCardSkeleton amount={10} />
       }
@@ -80,7 +81,7 @@ const Article = () => {
         allComments.length > 0 &&
         <div className="article__comments">
           {
-            allComments.filter((comment) => comment.post === id).map((comment) => (
+            allComments.filter((comment) => comment.post === id).reverse().map((comment) => (
               <div key={comment._id} className="article__comment-item">
                 <div className="article__comment-user">
                   <h2>{userData && <h2>{userData.firstname?.slice(0, 1)}</h2>}</h2>
