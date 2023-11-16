@@ -3,6 +3,7 @@ import "./Reel.scss";
 import instance from "../../services/api";
 import { Container } from '../../utils';
 import ArticleCard from '../article-card/ArticleCard';
+import { Link } from 'react-router-dom';
 
 const Reel = () => {
     const [data, setData] = useState([]);
@@ -22,8 +23,10 @@ const Reel = () => {
             <div className="reel__wrapper">
                 {
                     data.map(article => 
-                        <ArticleCard 
+                      <Link to={`/article/${article._id}`}>
+                          <ArticleCard 
                         key={article._id}
+                        id={article.id}
                             image={article.image}
                             title={article.title}
                             description={article.description}
@@ -31,6 +34,7 @@ const Reel = () => {
                             createdAt={article.createdAt}
                             category={article.category}
                         />
+                      </Link>
                     )
                 }
             </div>
