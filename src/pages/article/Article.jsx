@@ -54,15 +54,17 @@ const Article = () => {
       .then(response => setAllComments(response.data.data))
       .catch(err => console.log(err))
   }, [newComment])
+
+
+
   return (
     <Container>
       {!loading ?
         <div className='single-article'>
           <h2>{data.title}</h2>
           <img src={data.image} alt="picture" />
-          <p>{data.title}</p>
-
           <p>{parse(data.description)}</p>
+
         </div> :
         <SingleCardSkeleton amount={10} />
       }
@@ -83,8 +85,8 @@ const Article = () => {
           {
             allComments.filter((comment) => comment.post === id).reverse().map((comment) => (
               <div key={comment._id} className="article__comment-item">
-                <div className="article__comment-user">
-                  <h2>{userData && <h2>{userData.firstname?.slice(0, 1)}</h2>}</h2>
+                <div className="article__comment-user comment-user">
+                  {userData && <h2>{userData.firstname?.slice(0, 1)}</h2>}
                 </div>
                 <p>{comment.description}</p>
               </div>
