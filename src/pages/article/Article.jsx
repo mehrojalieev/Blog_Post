@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import {useValue } from "../../context/AppProvider"
 import instance from '../../services/api';
 import { Button, Container, SingleCardSkeleton } from '../../utils/index';
 import "./Article.scss";
 
 const Article = () => {
+  const [state] = useValue()
   const { id } = useParams();
   const [data, setData] = useState([]);
+  const [userData, setUserData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -20,9 +23,18 @@ const Article = () => {
         console.log(err);
         setLoading(false)
       })
+
+
+      instance(`/api/users/${state.auth.user_id}`)
+      .then(res => {
+        setUserData(res.data)
+      })
+    .catch((err) => {
+      console.log(err);
+    })
   }, [])
 
-  console.log(data.title);
+console.log(userData);
 
   return (
     <Container>
