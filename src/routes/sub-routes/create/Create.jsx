@@ -1,8 +1,8 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import "./Create.scss";
-import {Button} from "../../../utils"
+import { Button } from "../../../utils"
 import instance from '../../../services/api';
 import { useFetch } from '../../../helpers/hooks/useFetch';
 import { useValue } from '../../../context/AppProvider';
@@ -10,7 +10,7 @@ import { useValue } from '../../../context/AppProvider';
 const Create = () => {
   const [state] = useValue()
   const [category, setCategory] = useState("")
-  const {data} = useFetch("/api/categories")
+  const { data } = useFetch("/api/categories")
   const [title, setTitle] = useState("")
   const [image, setImage] = useState("")
   const [description, setDescription] = useState('');
@@ -41,8 +41,8 @@ const Create = () => {
       category,
       image, image
     })
-    .then(response => console.log(response))
-    .catch(err => console.log(err))
+      .then(response => console.log(response))
+      .catch(err => console.log(err))
   }
 
   console.log(category);
@@ -55,14 +55,14 @@ const Create = () => {
         <select defaultValue={"select"} className='form__input' onChange={(e) => setCategory(e.target.value)}>
           <option disabled value="select">Select post category</option>
           {
-            data?.data.map(categoryItem => 
-                <option value={categoryItem._id}>
-                  {categoryItem.title}
-                </option>
-              )
+            data?.data.map(categoryItem =>
+              <option value={categoryItem._id}>
+                {categoryItem.title}
+              </option>
+            )
           }
         </select>
-        <Button text={"Create"}/>
+        <Button text={"Create"} />
       </form>
     </div>
   )
