@@ -31,7 +31,10 @@ const [userData, setUserData] = useState([])
   return (
     <div className='main__user-wrapper'>
       <div className="about__user-container">
-        <h2>{userData.firstname}</h2>
+        <h2>{userData.fullname}</h2>
+        <h4>{userData.firstname}</h4>
+        
+
       </div>
       <div className="main__posts-container">
         {
