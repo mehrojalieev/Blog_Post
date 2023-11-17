@@ -16,6 +16,7 @@ const Article = () => {
   const [loading, setLoading] = useState(true)
   const [newComment, setNewComment] = useState(null)
   const [allComments, setAllComments] = useState([])
+
   useEffect(() => {
     instance(`/api/posts/${id}`)
       .then(res => {
@@ -70,7 +71,9 @@ const Article = () => {
       }
       <form onSubmit={handlePostComment} className='article__comment-form'>
         <div className="article__comment-user" >
-          {userData && <h2>{userData.firstname?.slice(0, 1)}</h2>}
+          {
+            userData && <h2>{userData.firstname.slice(0, 1)}  </h2>
+          }
         </div>
         <div className='article__comment-wrapper'>
           <textarea className='article__comment' value={commentValue} onChange={(e) => setCommentValue(e.target.value)} >
