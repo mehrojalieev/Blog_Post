@@ -5,7 +5,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 
 
 const Articles = () => {
-
+  const [closeModal, setCloseModal] = useState(false)
   const [articlesPost, setArticlesPost] = useState([])
 
   useEffect(() => {
@@ -32,19 +32,21 @@ const Articles = () => {
               <p>{articles.description.slice(0, 100)}</p>
               <div className="controls-btn">
                 <button className="update-btn">Update</button>
-                <button className="delete-btn">Delete</button>
+                <button onClick={() => setCloseModal(true)} className="delete-btn">Delete</button>
               </div>
             </div>
           )
         }
-      </div>
+      </div>-
     </div>
 
     {/* Modals */}
-    <div className="delete-modal">
+    <div style={closeModal ?{display: "block"} : {display: "none"}} className="modal__bg-wrapper">
+    <div style={closeModal ? {display: "block", display: "grid"} : {display: "none"}} className="delete-modal">
           <p>Are you sure to Delete Post ?</p>
           <button className="article-delete-btn">Delete</button>
-          <button className="close-modal"><IoIosCloseCircle /></button>
+          <button onClick={() => setCloseModal(false)} className="close-modal"><IoIosCloseCircle /></button>
+    </div>
     </div>
     </>
   )

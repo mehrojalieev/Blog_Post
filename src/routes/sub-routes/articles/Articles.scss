@@ -90,15 +90,27 @@
     .delete-btn{
         background-color: red;
         color: #fff;
+        transition: 0.2s;
+        
     }
 }
 
 
 // Modals Card
 
+.modal__bg-wrapper{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(10px);
+    z-index: 20;
+}
+
 .delete-modal{
     position: relative;
     position: absolute;
+    top: 18%;
+    left: 20%;
     display: grid;
     place-items: center;
     width: 380px;
@@ -118,6 +130,14 @@
         border-radius: 5px;
         background-color: #000;
         color: #fff;
+        transition: 0.2s;
+        &:hover{
+            cursor: pointer;
+            transform: scale(1.03);
+        }
+        &:active{
+            transform: scale(0.96);
+        }
     }
     .close-modal{
         position: absolute;
