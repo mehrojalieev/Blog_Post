@@ -10,7 +10,7 @@ const Admin = () => {
 
 
   const [userAllPosts, setUserAllPosts] = useState([])
-const [userData, setUserData] = useState([])
+  const [userData, setUserData] = useState([])
 
   // USER ALL POSTS
   useEffect(() => {
@@ -22,28 +22,28 @@ const [userData, setUserData] = useState([])
   }, [])
 
   // SET USER-DATA
-    instanse(`/api/users/${state.auth.user_id}`)
+  instanse(`/api/users/${state.auth.user_id}`)
     .then(response => {
       setUserData(response.data.data)
       console.log(response.data.data)
     })
 
-  return (  
+  return (
     <div className='main__user-wrapper'>
       <div className="about__user-container">
         <div className="user-profile">
           <p>{userData.email}</p>
-          <h3>{userData.firstname?.slice(0,1)}</h3>
+          <h3>{userData.firstname?.slice(0, 1)}</h3>
         </div>
-        
 
+    
       </div>
       <div className="main__posts-container">
         {
           userAllPosts.filter(myData => myData.author === user_id).map(userPost =>
             <div key={userPost._id} className="main__user-card">
               <h2>{userPost.title.slice(0, 28)}...</h2>
-              <img src={userPost.image} alt="" />
+              <img src={userPost.image} />
               <p>{userPost.description.slice(0, 300)}</p>
             </div>
           )
