@@ -28,11 +28,13 @@ const [userData, setUserData] = useState([])
       console.log(response.data.data)
     })
 
-  return (
+  return (  
     <div className='main__user-wrapper'>
       <div className="about__user-container">
-        <h2>{userData.fullname}</h2>
-        <h4>{userData.firstname}</h4>
+        <div className="user-profile">
+          <p>{userData.email}</p>
+          <h3>{userData.firstname?.slice(0,1)}</h3>
+        </div>
         
 
       </div>
