@@ -5,6 +5,7 @@ import { useValue } from "../../context/AppProvider";
 import { TbLogout2 } from "react-icons/tb";
 import { MdOutlineEmail, MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
+import { IoMdClose } from "react-icons/io";
 
 const Admin = () => {
 
@@ -33,8 +34,11 @@ const Admin = () => {
       })
   }, [])
 
+
+
   return (
-    <div className='main__user-wrapper'>
+    <>
+      <div className='main__user-wrapper'>
       <div className="about__user-container">
         <div className="main__user-info">
           <div>
@@ -74,7 +78,20 @@ const Admin = () => {
           )
         }
       </div>
+
+      
     </div>
+
+    {/* LOG OUT POP-UP */}
+
+        <div className="logout__modal-wrapper">
+            <div className="logout-card">
+                <p>Do you want to logout ?</p>
+                <button>LOG OUT</button>
+                <button className="close__logout-modal"><IoMdClose /></button>
+            </div>
+        </div>
+    </>
   )
 }
 
