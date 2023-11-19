@@ -16,6 +16,8 @@ const Admin = () => {
   const [userAllPosts, setUserAllPosts] = useState([])
   const [userData, setUserData] = useState([])
 
+  const [openLogoutModal, setOpenLogoutModal] = useState(false)
+
   // USER ALL POSTS
   useEffect(() => {
     instanse(`/api/posts/`)
@@ -64,7 +66,7 @@ const Admin = () => {
           <div className="main__user-logo">
             <h3>{userData.firstname?.slice(0, 1)}</h3>
           </div>
-          <button className="main__user-logout"><TbLogout2 /> Log Out</button>
+          <button onClick={() => setOpenLogoutModal(true)} className="main__user-logout"><TbLogout2 /> Log Out</button>
         </div>
       </div>
       <div className="main__posts-container">
@@ -84,11 +86,11 @@ const Admin = () => {
 
     {/* LOG OUT POP-UP */}
 
-        <div className="logout__modal-wrapper">
+        <div style={openLogoutModal ? {display: "flex"} : {display: "none"}} className="logout__modal-wrapper">
             <div className="logout-card">
                 <p>Do you want to logout ?</p>
-                <button>LOG OUT</button>
-                <button className="close__logout-modal"><IoMdClose /></button>
+                <button className="logout-btn">LOG OUT</button>
+                <button onClick={() => setOpenLogoutModal(false)} className="close__logout-modal"><IoMdClose /></button>
             </div>
         </div>
     </>
