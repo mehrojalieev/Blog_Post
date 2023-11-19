@@ -72,15 +72,17 @@
 .main__user-logout{
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0px 10px;
     position: absolute;
     right: 0;
+    width: 150px;
     bottom: -50px;
     border: none;
     border-radius: 5px;
     background-color: red;
     font-size: 18px;
-    padding: 7px 30px;
+    padding: 8px 0px;
     color: #fff;
     transition: 0.2s;
     &:hover{
