@@ -1,6 +1,7 @@
 import "./Admin.scss"
 import React, { useEffect, useState } from 'react';
 import instanse from "../../services/api/index"
+import { TbLogout2 } from "react-icons/tb";
 import { useValue } from "../../context/AppProvider";
 
 const Admin = () => {
@@ -22,21 +23,24 @@ const Admin = () => {
   }, [])
 
   // SET USER-DATA
-  instanse(`/api/users/${state.auth.user_id}`)
-    .then(response => {
-      setUserData(response.data.data)
-      console.log(response.data.data)
-    })
+  useEffect(() => {
+    instanse(`/api/users/${state.auth.user_id}`)
+      .then(response => {
+        setUserData(response.data.data)
+        console.log(response.data.data)
+      })
+  }, [])
 
   return (
     <div className='main__user-wrapper'>
       <div className="about__user-container">
         <div className="user-profile">
-          <p>{userData.email}</p>
-          <h3>{userData.firstname?.slice(0, 1)}</h3>
+          <p>{userData.fullname}</p>
+          <div className="main__user-logo">
+            <h3>{userData.firstname?.slice(0, 1)}</h3>
+          </div>
+          <button className="main__user-logout"><TbLogout2 /> Log Out</button>
         </div>
-
-    
       </div>
       <div className="main__posts-container">
         {

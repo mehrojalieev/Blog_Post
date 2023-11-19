@@ -10,23 +10,54 @@
     background-color: #d3cfcf;
 }
 .user-profile{
+    position: relative;
+    height: 80px;
     display: flex;
-    align-items: start;
-    gap: 0px 10px;
+    align-items: center;
+    gap: 0px 15px;
+    background-color: green;
     p{
         font-size: 1.5rem;
     }
-    h3{
+    .main__user-logo{
         display: flex;
         align-items: center;
-        padding: 10px;
+        justify-content: center;
+        width: 60px ;
+        height: 60px;
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-shadow: 7px 0px 5px #414040;
+        color: #fff;
+        font-family: var(--poppins);
         border-radius: 50%;
+        border: 2px solid var(--p-bg-dark);
         background-color: var(--p-bg-color);
-        font-size: 1.5rem;
         text-transform: uppercase;
+      }
+      h3{
+        padding: 20px;
+      }
+}
+.main__user-logout{
+    display: flex;
+    align-items: center;
+    gap: 0px 10px;
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+    border: none;
+    border-radius: 5px;
+    background-color: red;
+    font-size: 18px;
+    padding: 7px 30px;
+    color: #fff;
+    transition: 0.2s;
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.02);
     }
 }
-
 
 
 
