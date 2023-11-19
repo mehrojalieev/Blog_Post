@@ -1,8 +1,10 @@
 import "./Admin.scss"
 import React, { useEffect, useState } from 'react';
 import instanse from "../../services/api/index"
-import { TbLogout2 } from "react-icons/tb";
 import { useValue } from "../../context/AppProvider";
+import { TbLogout2 } from "react-icons/tb";
+import { MdOutlineEmail, MdOutlineDriveFileRenameOutline  } from "react-icons/md";
+import { RiShieldUserLine } from "react-icons/ri";
 
 const Admin = () => {
 
@@ -34,6 +36,13 @@ const Admin = () => {
   return (
     <div className='main__user-wrapper'>
       <div className="about__user-container">
+        <div className="main__user-info">
+          <p><MdOutlineEmail /> {userData.email}</p>
+          <p><MdOutlineDriveFileRenameOutline  /> {userData.firstname}</p>
+          <p><MdOutlineDriveFileRenameOutline /> {userData.lastname}</p>
+          <p><RiShieldUserLine /> {userData.role}</p>
+
+        </div>
         <div className="user-profile">
           <p>{userData.fullname}</p>
           <div className="main__user-logo">

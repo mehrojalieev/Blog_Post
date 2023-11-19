@@ -9,6 +9,12 @@
     height: 300px;
     background-color: #d3cfcf;
 }
+
+.main__user-info{
+    display: flex;
+    flex-direction: column;
+    gap: 20px 0;
+}
 .user-profile{
     position: relative;
     height: 80px;
