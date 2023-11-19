@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import instanse from "../../services/api/index"
 import { useValue } from "../../context/AppProvider";
 import { TbLogout2 } from "react-icons/tb";
-import { MdOutlineEmail, MdOutlineDriveFileRenameOutline  } from "react-icons/md";
+import { MdOutlineEmail, MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
 
 const Admin = () => {
@@ -37,10 +37,22 @@ const Admin = () => {
     <div className='main__user-wrapper'>
       <div className="about__user-container">
         <div className="main__user-info">
-          <p><MdOutlineEmail /> {userData.email}</p>
-          <p><MdOutlineDriveFileRenameOutline  /> {userData.firstname}</p>
-          <p><MdOutlineDriveFileRenameOutline /> {userData.lastname}</p>
-          <p><RiShieldUserLine /> {userData.role}</p>
+          <div>
+            <span><MdOutlineEmail /> Email:</span>
+            <p> {userData.email}</p>
+          </div>
+          <div>
+            <span><MdOutlineDriveFileRenameOutline /> Firstname:</span>
+            <p> {userData.firstname}</p>
+          </div>
+          <div>
+            <span><MdOutlineDriveFileRenameOutline />  Lastname:</span>
+            <p>{userData.lastname}</p>
+          </div>
+          <div>
+            <span><RiShieldUserLine /> Role:</span>
+            <p> {userData.role}</p>
+          </div>
 
         </div>
         <div className="user-profile">
