@@ -86,8 +86,8 @@ const Admin = () => {
 
     {/* LOG OUT POP-UP */}
 
-        <div style={openLogoutModal ? {display: "flex"} : {display: "none"}} className="logout__modal-wrapper">
-            <div className="logout-card">
+        <div style={openLogoutModal ? {display: "block"} : {display: "none"}} className="logout__modal-wrapper">
+            <div style={openLogoutModal ? {display: "flex"} : {display: "none"}} className="logout-card">
                 <p>Do you want to logout ?</p>
                 <button className="logout-btn">LOG OUT</button>
                 <button onClick={() => setOpenLogoutModal(false)} className="close__logout-modal"><IoMdClose /></button>
