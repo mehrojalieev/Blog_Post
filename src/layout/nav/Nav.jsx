@@ -4,6 +4,7 @@ import logo from "../../assets/images/logo.svg";
 import { NavLink, useLocation } from 'react-router-dom';
 import { useValue } from '../../context/AppProvider';
 import { useFetch } from '../../helpers/hooks/useFetch';
+import { FaUser } from "react-icons/fa";
 
 const Nav = ({ type }) => {
   const [state] = useValue();
@@ -15,7 +16,7 @@ const Nav = ({ type }) => {
       <Container>
         <div className="nav__wrapper">
           <div className="nav__logo">
-            <img width={200} height={40} src={logo} alt="" />
+            <img width={200} height={40} src={logo} />
             <h1 className="nav__seo-title">Medium</h1>
           </div>
 
@@ -34,7 +35,7 @@ const Nav = ({ type }) => {
                 <NavLink className={({ isActive }) => isActive ? "nav__link nav__link--active btn" : "nav__link btn"} to="/auth/signup">Get Started</NavLink>
               </>
               :
-              <NavLink className="nav__link" to="/admin">{loading ? "Loading..." : data?.data.firstname}</NavLink>
+              <NavLink className="nav__link" to="/admin"><FaUser />{loading ? "Loading..." : data?.data.firstname}</NavLink>
             }
           </div>
         </div>

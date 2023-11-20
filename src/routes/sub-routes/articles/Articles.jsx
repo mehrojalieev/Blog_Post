@@ -18,8 +18,8 @@ const Articles = () => {
   const [getPostId, setGetPostId] = useState('')
   const { data } = useFetch("/api/categories")
 
-  useEffect(() =>{
-    if(getPostId){
+  useEffect(() => {
+    if (getPostId) {
       setCloseModal(true)
     }
   }, [getPostId])
@@ -104,7 +104,7 @@ const Articles = () => {
         </form>
       </div>
 
-      {/* Modals */}
+      {/*Delete Modal */}
       <div style={closeModal ? { display: "block" } : { display: "none" }} className="modal__bg-wrapper">
         <div style={closeModal ? { display: "block", display: "grid" } : { display: "none" }} className="delete-modal">
           <p>Are you sure to Delete Post ?</p>
