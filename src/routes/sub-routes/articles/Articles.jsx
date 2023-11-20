@@ -18,10 +18,16 @@ const Articles = () => {
   const [getPostId, setGetPostId] = useState('')
   const { data } = useFetch("/api/categories")
 
+  useEffect(() =>{
+    if(getPostId){
+      setCloseModal(true)
+    }
+  }, [getPostId])
+
 
   useEffect(() => {
     instance("/api/posts")
-      .then(response => { 
+      .then(response => {
         console.log(response.data.data);
         setArticlesPost(response.data.data)
       })
@@ -69,8 +75,8 @@ const Articles = () => {
                 </div>
                 <p>{articles.description.slice(0, 100)}</p>
                 <div className="controls-btn">
-                  <button onClick={() => {setOpenUpdateModal(true); setGetPostId(articles._id)}} className="update-btn">Update</button>
-                  <button onClick={() => handleDelete(articles._id)} className="delete-btn">Delete</button>
+                  <button onClick={() => { setOpenUpdateModal(true); setGetPostId(articles._id) }} className="update-btn">Update</button>
+                  <button onClick={() => setGetPostId(articles._id)} className="delete-btn">Delete</button>
                 </div>
               </div>
             )
@@ -84,28 +90,28 @@ const Articles = () => {
           <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" />
           <input type="url" value={image} onChange={(e) => setImage(e.target.value)} placeholder="Image URL" />
           <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" />
-            <select>
-              <option disabled value={"select"}>Select post category</option>
-              {
-                data?.data.map(categoryItem => 
-                    <option value={categoryItem._id}>
-                      {categoryItem.title}
-                    </option>
-                  )
-              }
-            </select>
+          <select>
+            <option disabled value={"select"}>Select post category</option>
+            {
+              data?.data.map(categoryItem =>
+                <option value={categoryItem._id}>
+                  {categoryItem.title}
+                </option>
+              )
+            }
+          </select>
           <button type="submit">UPDATE POST</button>
         </form>
       </div>
 
       {/* Modals */}
-      {/* <div style={closeModal ?{display: "block"} : {display: "none"}} className="modal__bg-wrapper">
-    <div style={closeModal ? {display: "block", display: "grid"} : {display: "none"}} className="delete-modal">
+      <div style={closeModal ? { display: "block" } : { display: "none" }} className="modal__bg-wrapper">
+        <div style={closeModal ? { display: "block", display: "grid" } : { display: "none" }} className="delete-modal">
           <p>Are you sure to Delete Post ?</p>
-          <button className="article-delete-btn">Delete</button>
+          <button onClick={() => handleDelete(getPostId)} className="article-delete-btn">Delete</button>
           <button onClick={() => setCloseModal(false)} className="close-modal"><IoIosCloseCircle /></button>
-    </div>
-    </div> */}
+        </div>
+      </div>
     </>
   )
 }
