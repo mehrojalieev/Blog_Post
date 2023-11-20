@@ -5,10 +5,10 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useValue } from '../../context/AppProvider';
 import { useFetch } from '../../helpers/hooks/useFetch';
 
-const Nav = ({type}) => {
+const Nav = ({ type }) => {
   const [state] = useValue();
   const { data, loading, error } = useFetch(`/api/users/${state.auth.user_id}`)
-  const {pathname } = useLocation();
+  const { pathname } = useLocation();
 
   return pathname.includes("/auth") || pathname.includes("/admin") ? null : (
     <nav className='nav'>
@@ -18,19 +18,25 @@ const Nav = ({type}) => {
             <img width={200} height={40} src={logo} alt="" />
             <h1 className="nav__seo-title">Medium</h1>
           </div>
+
+
           <ul className='nav__list'>
-            <li className='nav__item'><NavLink end className={({isActive}) => isActive ? "nav__link nav__link--active" : "nav__link"} to="/">Home</NavLink></li>
-            <li className='nav__item'><NavLink className={({isActive}) => isActive ? "nav__link nav__link--active" : "nav__link"} to="/membership">Membership</NavLink></li>
-            <li className='nav__item'><NavLink className={({isActive}) => isActive ? "nav__link nav__link--active" : "nav__link"} to="/articles">Articles</NavLink></li>
-          {!data && error  ?
-            <>
-              <li   className='nav__item'><NavLink className={({isActive}) => isActive ? "nav__link nav__link--active" : "nav__link"} to="/auth/login">Login</NavLink></li>
-              <li className='nav__item'><NavLink className={({isActive}) => isActive ? "nav__link nav__link--active btn" : "nav__link btn"} to="/auth/signup">Get Started</NavLink></li>
-            </>
-            :
-            <li   className='nav__item'><NavLink className="nav__link" to="/admin">{loading ? "Loading..." : data?.data.firstname}</NavLink></li>
-            }
+            <li className='nav__item'><NavLink end className={({ isActive }) => isActive ? "nav__link nav__link--active" : "nav__link"} to="/">Home</NavLink></li>
+            <li className='nav__item'><NavLink className={({ isActive }) => isActive ? "nav__link nav__link--active" : "nav__link"} to="/membership">Membership</NavLink></li>
+            <li className='nav__item'><NavLink className={({ isActive }) => isActive ? "nav__link nav__link--active" : "nav__link"} to="/articles">Articles</NavLink></li>
+
           </ul>
+
+          <div className="user-profile">
+            {!data && error ?
+              <>
+                <NavLink className={({ isActive }) => isActive ? "nav__link nav__link--active" : "nav__link"} to="/auth/login">Login</NavLink>
+                <NavLink className={({ isActive }) => isActive ? "nav__link nav__link--active btn" : "nav__link btn"} to="/auth/signup">Get Started</NavLink>
+              </>
+              :
+              <NavLink className="nav__link" to="/admin">{loading ? "Loading..." : data?.data.firstname}</NavLink>
+            }
+          </div>
         </div>
       </Container>
     </nav>
