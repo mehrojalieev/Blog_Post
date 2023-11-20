@@ -47,6 +47,11 @@ const Admin = () => {
   }, [])
 
 
+  // useEffect(() => {
+  //   instanse.put(`/api/posts/update/${id}`)
+    
+  // }, [])
+
 
   return (
     <>

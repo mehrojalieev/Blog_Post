@@ -8,6 +8,10 @@ const Articles = () => {
   const [closeModal, setCloseModal] = useState(false)
   const [articlesPost, setArticlesPost] = useState([])
 
+  // Update Inputs
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+
   useEffect(() => {
     instance("/api/posts")
       .then(response => {
@@ -26,6 +30,20 @@ const Articles = () => {
     }, 2000)
    }
   const user_id = localStorage.getItem("user_id")
+
+
+  // UPDATE POST
+   const handleUpdatePost = (id) => {
+    console.log(id);
+    instance.put(`/api/posts/update/${id}`, {
+      title, 
+      description
+    })
+    .then(response => {
+      console.log(response.data);
+    })
+   }
+
   return (
     <>
       <div className='all__articles-wrapper'>
@@ -36,17 +54,24 @@ const Articles = () => {
               <div key={articles._id} className="articles-card">
                 <h2>{articles.title.slice(0, 28)}...</h2>
                 <div className="articles-image">
-                  <img src={articles.image} alt="" />
+                  <img src={articles.image}/>
                 </div>
                 <p>{articles.description.slice(0, 100)}</p>
                 <div className="controls-btn">
-                  <button className="update-btn">Update</button>
+                  <button onClick={() => handleUpdatePost(articles._id)} className="update-btn">Update</button>
                   <button onClick={() => handleDelete(articles._id)} className="delete-btn">Delete</button>
                 </div>
               </div>
             )
           }
         </div>-
+      </div>
+
+      {/* UPDATE MODAL */}
+      <div className="update__modal-card">
+        <input type="text" value={title} onChange={(e) =>setTitle(e.target.value)} placeholder="Title" />
+        <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}  placeholder="Description"/>
+        <button>UPDATE POST</button>
       </div>
 
       {/* Modals */}
