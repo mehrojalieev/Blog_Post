@@ -22,13 +22,13 @@
         align-items: center;
         gap: 0px 20px;
         span{
-            display: flex;
-            align-items: center;
-            gap: 0px 10px;
             font-size: 20px;
         }
         p{
+            display: flex;
+            align-items: center;
             padding-bottom: 5px;
+            gap: 0px 15px;
             font-size: 20px;
             transition: 0.3s;
             &:hover{
