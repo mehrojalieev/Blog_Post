@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import "./Articles.scss"
 import instance from "../../../services/api"
+import { useFetch } from "../../../helpers/hooks/useFetch";
 import { IoIosCloseCircle } from "react-icons/io";
 
 
@@ -11,10 +12,16 @@ const Articles = () => {
   // Update Inputs
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [category, setCategory] = useState('')
+  const [image, setImage] = useState("")
+  const [openUpdateModal, setOpenUpdateModal] = useState(false)
+  const [getPostId, setGetPostId] = useState('')
+  const { data } = useFetch("/api/categories")
+
 
   useEffect(() => {
     instance("/api/posts")
-      .then(response => {
+      .then(response => { 
         console.log(response.data.data);
         setArticlesPost(response.data.data)
       })
@@ -22,27 +29,31 @@ const Articles = () => {
   }, [])
 
 
-   const handleDelete =(id) => {
+  const handleDelete = (id) => {
     console.log(id);
     instance.delete(`/api/posts/${id}`)
     setTimeout(() => {
       window.location.reload(true)
     }, 2000)
-   }
+  }
   const user_id = localStorage.getItem("user_id")
 
 
   // UPDATE POST
-   const handleUpdatePost = (id) => {
-    console.log(id);
-    instance.put(`/api/posts/update/${id}`, {
-      title, 
-      description
+  const handleUpdatePost = (e) => {
+    e.preventDefault()
+    console.log(getPostId);
+    instance.put(`/api/posts/update/${getPostId}`, {
+      title,
+      description,
+      category,
+      image
+
     })
-    .then(response => {
-      console.log(response.data);
-    })
-   }
+      .then(response => {
+        console.log(response);
+      })
+  }
 
   return (
     <>
@@ -54,11 +65,11 @@ const Articles = () => {
               <div key={articles._id} className="articles-card">
                 <h2>{articles.title.slice(0, 28)}...</h2>
                 <div className="articles-image">
-                  <img src={articles.image}/>
+                  <img src={articles.image} />
                 </div>
                 <p>{articles.description.slice(0, 100)}</p>
                 <div className="controls-btn">
-                  <button onClick={() => handleUpdatePost(articles._id)} className="update-btn">Update</button>
+                  <button onClick={() => {setOpenUpdateModal(true); setGetPostId(articles._id)}} className="update-btn">Update</button>
                   <button onClick={() => handleDelete(articles._id)} className="delete-btn">Delete</button>
                 </div>
               </div>
@@ -68,10 +79,23 @@ const Articles = () => {
       </div>
 
       {/* UPDATE MODAL */}
-      <div className="update__modal-card">
-        <input type="text" value={title} onChange={(e) =>setTitle(e.target.value)} placeholder="Title" />
-        <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}  placeholder="Description"/>
-        <button>UPDATE POST</button>
+      <div style={openUpdateModal ? { display: "block" } : { display: "none" }} className="update__modal-card">
+        <form onSubmit={() => handleUpdatePost(getPostId)} className="update-form">
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" />
+          <input type="url" value={image} onChange={(e) => setImage(e.target.value)} placeholder="Image URL" />
+          <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" />
+            <select>
+              <option disabled value={"select"}>Select post category</option>
+              {
+                data?.data.map(categoryItem => 
+                    <option value={categoryItem._id}>
+                      {categoryItem.title}
+                    </option>
+                  )
+              }
+            </select>
+          <button type="submit">UPDATE POST</button>
+        </form>
       </div>
 
       {/* Modals */}
