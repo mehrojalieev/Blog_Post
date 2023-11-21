@@ -9,6 +9,14 @@ const Articles = () => {
   const [closeModal, setCloseModal] = useState(false)
   const [articlesPost, setArticlesPost] = useState([])
   const [getPostId, setGetPostId] = useState('')
+  const { data } = useFetch("/api/categories")
+
+  // UPDATE MODAL INPUTS 
+  const [title, setTitle] = useState("")
+  const [image, setImage] = useState("")
+  const [description, setDescription] = useState("")
+  const [category, setCategory] = useState("")
+
   // Button Loading
   const [btnLoading, setBtnLoading] = useState(false)
 
@@ -30,6 +38,7 @@ const Articles = () => {
 
   const delBtn = useRef()
   const delBtnStyle = delBtn.current
+
   const handleDelete = (id) => {
     setBtnLoading(true)
     delBtnStyle.style = "opacity: 0.8; cursor: not-allowed;"
@@ -41,7 +50,16 @@ const Articles = () => {
   }
   const user_id = localStorage.getItem("user_id")
 
-
+  const updatePost = (e) => {
+    e.preventDefault()
+    instance.put(`/api/posts/${getPostId}`, {
+      title,
+      description,
+      image,
+      category
+    })
+      .then(response => console.log(response))
+  }
 
 
   return (
@@ -58,13 +76,33 @@ const Articles = () => {
                 </div>
                 <p>{articles.description.slice(0, 100)}</p>
                 <div className="controls-btn">
-                  <button  className="update-btn">Update</button>
+                  <button className="update-btn">Update</button>
                   <button onClick={() => setGetPostId(articles._id)} className="delete-btn">Delete</button>
                 </div>
               </div>
             )
           }
-        </div>-
+        </div>
+      </div>
+
+      {/* UPDATE MODAL */}
+      <div className="update__modal-card">
+        <form className="update-form">
+          <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Title" />
+          <input value={image} onChange={(e) => setImage(e.target.value)} type="url" placeholder="Image URL" />
+          <textarea value={description} onChange={(e) => setCategory(e.target.value)} placeholder="Description"></textarea>
+          <select defaultValue={"select"}  onChange={(e) => setCategory(e.target.value)}>
+            <option disabled value="select">Select post category</option>
+            {
+              data?.data.map(categoryItem =>
+                <option value={categoryItem._id}>
+                  {categoryItem.title}
+                </option>
+              )
+            }
+          </select>
+          <button type="submit">UPDATE POST</button>
+        </form>
       </div>
 
 
@@ -76,7 +114,7 @@ const Articles = () => {
           <button onClick={() => setCloseModal(false)} className="close-modal"><IoIosCloseCircle /></button>
         </div>
         {/* Loading */}
-        <div style={btnLoading ? {display: "block", cursor: "not-allowed"} : {display: "none"}} class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <div style={btnLoading ? { display: "block", cursor: "not-allowed" } : { display: "none" }} class="lds-ring"><div></div><div></div><div></div><div></div></div>
       </div>
     </>
   )
