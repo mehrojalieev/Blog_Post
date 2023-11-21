@@ -103,13 +103,14 @@
 
 // UPDATE MODAL
 .update__modal-card{
+    position: relative;
     position: absolute;
     top: calc(50% - 180px);
     left: calc(22%);
     width: 800px;
     border-radius: 10px;
     height: fit-content;
-    padding: 20px 5px;
+    padding: 45px 5px 20px;
     background-color: var(--p-bg-color);
 }
 .update-form{
@@ -152,6 +153,24 @@
     }
 
 }
+
+
+.close__update-modal{
+    position: absolute;
+    top: 5px; right: 7px;
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    transition: 0.1s;
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.1);
+    }
+}
+
+
+
+
 
 // Delete Modals Card
 

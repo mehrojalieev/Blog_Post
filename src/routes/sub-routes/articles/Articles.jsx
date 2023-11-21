@@ -119,6 +119,7 @@ const Articles = () => {
           </select>
           <button type="submit">UPDATE POST</button>
         </form>
+          <button onClick={() => setUpdateModal(false)} className="close__update-modal"><IoIosCloseCircle /></button>
       </div>
 
 
