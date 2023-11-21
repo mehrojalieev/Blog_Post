@@ -15,6 +15,8 @@ const Create = () => {
   const [image, setImage] = useState("")
   const [description, setDescription] = useState('');
 
+  const [loadingOpen, setLoadingOpen] = useState(false)
+
 
   const modules = {
     toolbar: {
@@ -34,7 +36,7 @@ const Create = () => {
 
   const handleCreatePost = (e) => {
     e.preventDefault()
-
+    
     instance.post("/api/posts", {
       title,
       description,
@@ -62,11 +64,12 @@ const Create = () => {
             )
           }
         </select>
-        <Button text={"Create"} />
+        <button onClick={() => setLoadingOpen(true)}>Create</button>
       </form>
-
+          {/* Loading */}
+          <div style={loadingOpen ? {display: "block"} : {display: "none"}} class="lds-dual-ring"></div>
     </div>
-    
+
   )
 }
 
