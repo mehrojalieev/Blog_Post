@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import instanse from "../../services/api/index"
 import { useValue } from "../../context/AppProvider";
 import { TbLogout2 } from "react-icons/tb";
-import { MdOutlineEmail, MdOutlineDriveFileRenameOutline } from "react-icons/md";
+import { MdOutlineEmail, MdOutlineDriveFileRenameOutline, MdNumbers } from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
 
@@ -81,6 +81,7 @@ const Admin = () => {
             <div className="main__user-logo">
               <h3>{userData.firstname?.slice(0, 1)}</h3>
             </div>
+            
             <button onClick={() => setOpenLogoutModal(true)} className="main__user-logout"><TbLogout2 /> Log Out</button>
           </div>
         </div>
@@ -91,6 +92,7 @@ const Admin = () => {
                 <h2>{userPost.title.slice(0, 28)}...</h2>
                 <img src={userPost.image} />
                 <p>{userPost.description.slice(0, 300)}</p>
+                <p>description</p>
               </div>
             )
           }

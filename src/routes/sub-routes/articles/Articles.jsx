@@ -24,7 +24,6 @@ const Articles = () => {
     }
   }, [getPostId])
 
-
   useEffect(() => {
     instance("/api/posts")
       .then(response => {
@@ -49,7 +48,7 @@ const Articles = () => {
   const handleUpdatePost = (e) => {
     e.preventDefault()
     console.log(getPostId);
-    instance.put(`/api/posts/update/${getPostId}`, {
+    instance.put(`/api/posts/${getPostId}`, {
       title,
       description,
       category,
