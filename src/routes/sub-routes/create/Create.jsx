@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import "./Create.scss";
@@ -34,9 +34,11 @@ const Create = () => {
     }
   };
 
+  const Button = useRef()
+  const createBtn = Button.current
   const handleCreatePost = (e) => {
     e.preventDefault()
-    
+    createBtn.style = "cursor: not-allowed; opacity: 0.8"
     instance.post("/api/posts", {
       title,
       description,
@@ -45,6 +47,9 @@ const Create = () => {
     })
       .then(response => console.log(response))
       .catch(err => console.log(err))
+      setTimeout(() => {
+        window.location.reload(true)
+      }, 1800)
   }
 
   console.log(category);
@@ -64,7 +69,7 @@ const Create = () => {
             )
           }
         </select>
-        <button onClick={() => setLoadingOpen(true)}>Create</button>
+        <button ref={Button} onClick={() => setLoadingOpen(true)}>Create</button>
       </form>
           {/* Loading */}
           <div style={loadingOpen ? {display: "block"} : {display: "none"}} class="lds-dual-ring"></div>
