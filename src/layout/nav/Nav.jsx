@@ -35,7 +35,7 @@ const Nav = ({ type }) => {
                 <NavLink className={({ isActive }) => isActive ? "nav__link nav__link--active btn" : "nav__link btn"} to="/auth/signup">Get Started</NavLink>
               </>
               :
-              <NavLink className="nav__link" to="/admin"><FaUser />{loading ? "Loading..." : data?.data.firstname}</NavLink>
+              <NavLink className="nav__link" to="/admin"><FaUser />{loading ? <div class="loader"></div> : data?.data.firstname}</NavLink>
             }
           </div>
         </div>
