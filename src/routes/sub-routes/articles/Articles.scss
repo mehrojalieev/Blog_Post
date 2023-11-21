@@ -99,44 +99,6 @@
     }
 }
 
-// UPDATE POST STYLES
-.update__modal-card{
-    position: absolute;
-    width: 350px;
-    height: auto;
-    background-color: var(--p-bg-color);
-    border: 5px;
-    
-    padding: 10px;
-  }
-  .update-form{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;    
-    input{
-        width: 100%;
-        border: 1px solid var(--p-bg-color);
-        font-size: 17px;
-        height: 40px;
-        text-indent: 15px;
-
-    }
-    button{
-        padding: 8px 30px;
-        border: none;
-        border-radius: 5px;
-        background-color: #000;
-        font-size: 18px;
-        transition: 0.2s;
-        color: #fff;
-        &:hover{
-            cursor: pointer;
-            transform: scale(1.02);
-        }
-    }
-  }
 // Delete Modals Card
 
 .modal__bg-wrapper{
@@ -164,6 +126,7 @@
         margin-top: 20px;
     }
     .article-delete-btn{
+        position: relative;
         width: 180px;
         padding: 10px 0px;
         border: none;
@@ -198,15 +161,13 @@
 
 // Loading
 .lds-ring {
-
     display: inline-block;
     position: relative;
     position: absolute;
-    top: 7px;
-    left: 7px;
+    left: calc(50% - 286px);
+    top: calc(33% + 3px);
     width: 8px;
     height: 8px;
-    // display: none;
   }
   .lds-ring div {
     box-sizing: border-box;
@@ -214,11 +175,12 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    margin: 2px;
-    border: 3px solid #fff;
+    margin: 8px;
+    border: 3px solid #ff4444;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #fff transparent transparent transparent;
+    border-color: #d14343 transparent transparent transparent;
+    
   }
   .lds-ring div:nth-child(1) {
     animation-delay: -0.45s;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import "./Articles.scss"
 import instance from "../../../services/api"
 import { useFetch } from "../../../helpers/hooks/useFetch";
@@ -8,15 +8,9 @@ import { IoIosCloseCircle } from "react-icons/io";
 const Articles = () => {
   const [closeModal, setCloseModal] = useState(false)
   const [articlesPost, setArticlesPost] = useState([])
-
-  // Update Inputs
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [category, setCategory] = useState('')
-  const [image, setImage] = useState("")
-  const [openUpdateModal, setOpenUpdateModal] = useState(false)
   const [getPostId, setGetPostId] = useState('')
-  const { data } = useFetch("/api/categories")
+  // Button Loading
+  const [btnLoading, setBtnLoading] = useState(false)
 
   useEffect(() => {
     if (getPostId) {
@@ -34,7 +28,11 @@ const Articles = () => {
   }, [])
 
 
+  const delBtn = useRef()
+  const delBtnStyle = delBtn.current
   const handleDelete = (id) => {
+    setBtnLoading(true)
+    delBtnStyle.style = "opacity: 0.8; cursor: not-allowed;"
     console.log(id);
     instance.delete(`/api/posts/${id}`)
     setTimeout(() => {
@@ -44,21 +42,7 @@ const Articles = () => {
   const user_id = localStorage.getItem("user_id")
 
 
-  // UPDATE POST
-  const handleUpdatePost = (e) => {
-    e.preventDefault()
-    console.log(getPostId);
-    instance.put(`/api/posts/${getPostId}`, {
-      title,
-      description,
-      category,
-      image
 
-    })
-      .then(response => {
-        console.log(response);
-      })
-  }
 
   return (
     <>
@@ -74,7 +58,7 @@ const Articles = () => {
                 </div>
                 <p>{articles.description.slice(0, 100)}</p>
                 <div className="controls-btn">
-                  <button onClick={() => { setOpenUpdateModal(true); setGetPostId(articles._id) }} className="update-btn">Update</button>
+                  <button  className="update-btn">Update</button>
                   <button onClick={() => setGetPostId(articles._id)} className="delete-btn">Delete</button>
                 </div>
               </div>
@@ -83,33 +67,16 @@ const Articles = () => {
         </div>-
       </div>
 
-      {/* UPDATE MODAL */}
-      <div style={openUpdateModal ? { display: "block" } : { display: "none" }} className="update__modal-card">
-        <form onSubmit={() => handleUpdatePost(getPostId)} className="update-form">
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" />
-          <input type="url" value={image} onChange={(e) => setImage(e.target.value)} placeholder="Image URL" />
-          <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" />
-          <select>
-            <option disabled value={"select"}>Select post category</option>
-            {
-              data?.data.map(categoryItem =>
-                <option value={categoryItem._id}>
-                  {categoryItem.title}
-                </option>
-              )
-            }
-          </select>
-          <button type="submit">UPDATE POST</button>
-        </form>
-      </div>
 
       {/*Delete Modal */}
       <div style={closeModal ? { display: "block" } : { display: "none" }} className="modal__bg-wrapper">
         <div style={closeModal ? { display: "block", display: "grid" } : { display: "none" }} className="delete-modal">
           <p>Are you sure to Delete Post ?</p>
-          <button onClick={() => handleDelete(getPostId)} className="article-delete-btn">Delete</button>
+          <button ref={delBtn} onClick={() => handleDelete(getPostId)} className="article-delete-btn">Delete</button>
           <button onClick={() => setCloseModal(false)} className="close-modal"><IoIosCloseCircle /></button>
         </div>
+        {/* Loading */}
+        <div style={btnLoading ? {display: "block", cursor: "not-allowed"} : {display: "none"}} class="lds-ring"><div></div><div></div><div></div><div></div></div>
       </div>
     </>
   )
