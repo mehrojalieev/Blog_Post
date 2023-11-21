@@ -74,6 +74,7 @@
         border-radius: 5px;
         font-size: 18px;
         transition: 0.2s;
+        background-color: red;
         &:hover{
             cursor: pointer;
             transform: scale(1.03);
@@ -92,7 +93,7 @@
         display: flex;
         align-items: center;
         gap: 0px 20px;
-        background-color: red;
+        background-color: redx;
         color: #fff;
         transition: 0.2s;
         
@@ -102,9 +103,13 @@
 
 // UPDATE MODAL
 .update__modal-card{
+    position: absolute;
+    top: calc(50% - 180px);
+    left: calc(22%);
     width: 800px;
+    border-radius: 10px;
     height: fit-content;
-    padding: 10px 5px;
+    padding: 20px 5px;
     background-color: var(--p-bg-color);
 }
 .update-form{
@@ -116,13 +121,21 @@
     gap: 20px;
     input, textarea{
         width: 100%;
-        height: 30px;
+        height: 40px;
         outline: none;
         border: none;
         border-radius: 5px;
         text-indent: 10px;
         font-size: 17px;
         resize: none;
+    }
+    select{
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 17px;
+        border-radius: 5px;
+        height: 35px;
     }
     button{
         padding: 8px 30px;

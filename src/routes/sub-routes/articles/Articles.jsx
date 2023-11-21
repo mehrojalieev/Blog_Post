@@ -6,16 +6,39 @@ import { IoIosCloseCircle } from "react-icons/io";
 
 
 const Articles = () => {
+  const user_id = localStorage.getItem("user_id")
   const [closeModal, setCloseModal] = useState(false)
   const [articlesPost, setArticlesPost] = useState([])
   const [getPostId, setGetPostId] = useState('')
+  const [getUpdateId, setGetUpdateId] = useState('')
   const { data } = useFetch("/api/categories")
 
-  // UPDATE MODAL INPUTS 
+  const [updateModal, setUpdateModal] = useState(false)
   const [title, setTitle] = useState("")
   const [image, setImage] = useState("")
   const [description, setDescription] = useState("")
   const [category, setCategory] = useState("")
+
+
+  console.log(getUpdateId);
+  // UPDATE MODAL INPUTS 
+  useEffect(() => {
+    if (getUpdateId) {
+      
+      setUpdateModal(true)
+    }
+  }, [getUpdateId])
+
+  const handleUpdatePost = (e) => {
+    e.preventDefault()
+    instance.put(`/api/posts/${getPostId}`, {
+      title,
+      description,
+      image,
+      category
+    })
+      .then(response => console.log(response))
+  }
 
   // Button Loading
   const [btnLoading, setBtnLoading] = useState(false)
@@ -25,6 +48,8 @@ const Articles = () => {
       setCloseModal(true)
     }
   }, [getPostId])
+
+
 
   useEffect(() => {
     instance("/api/posts")
@@ -36,29 +61,20 @@ const Articles = () => {
   }, [])
 
 
+  // DELETE POST
   const delBtn = useRef()
   const delBtnStyle = delBtn.current
 
   const handleDelete = (id) => {
+
     setBtnLoading(true)
+
     delBtnStyle.style = "opacity: 0.8; cursor: not-allowed;"
     console.log(id);
     instance.delete(`/api/posts/${id}`)
     setTimeout(() => {
       window.location.reload(true)
     }, 2000)
-  }
-  const user_id = localStorage.getItem("user_id")
-
-  const updatePost = (e) => {
-    e.preventDefault()
-    instance.put(`/api/posts/${getPostId}`, {
-      title,
-      description,
-      image,
-      category
-    })
-      .then(response => console.log(response))
   }
 
 
@@ -76,7 +92,7 @@ const Articles = () => {
                 </div>
                 <p>{articles.description.slice(0, 100)}</p>
                 <div className="controls-btn">
-                  <button className="update-btn">Update</button>
+                  <button onClick={() => setGetUpdateId(articles._id)} className="update-btn">Update</button>
                   <button onClick={() => setGetPostId(articles._id)} className="delete-btn">Delete</button>
                 </div>
               </div>
@@ -86,12 +102,12 @@ const Articles = () => {
       </div>
 
       {/* UPDATE MODAL */}
-      <div className="update__modal-card">
-        <form className="update-form">
+      <div style={updateModal ? { display: "block" } : { display: "none" }} className="update__modal-card">
+        <form onSubmit={handleUpdatePost} className="update-form">
           <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Title" />
           <input value={image} onChange={(e) => setImage(e.target.value)} type="url" placeholder="Image URL" />
           <textarea value={description} onChange={(e) => setCategory(e.target.value)} placeholder="Description"></textarea>
-          <select defaultValue={"select"}  onChange={(e) => setCategory(e.target.value)}>
+          <select defaultValue={"select"} onChange={(e) => setCategory(e.target.value)}>
             <option disabled value="select">Select post category</option>
             {
               data?.data.map(categoryItem =>
