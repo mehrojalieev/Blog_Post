@@ -3,6 +3,8 @@ import "./Articles.scss"
 import instance from "../../../services/api"
 import { useFetch } from "../../../helpers/hooks/useFetch";
 import { IoIosCloseCircle } from "react-icons/io";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 
 const Articles = () => {
@@ -20,18 +22,33 @@ const Articles = () => {
   const [category, setCategory] = useState("")
 
 
+  const modules = {
+    toolbar: {
+      container: [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+        ['link',]
+      ],
+    },
+    history: {
+      delay: 500,
+      maxStack: 100,
+      userOnly: true
+    }
+  };
   console.log(getUpdateId);
   // UPDATE MODAL INPUTS 
   useEffect(() => {
     if (getUpdateId) {
-      
+
       setUpdateModal(true)
     }
   }, [getUpdateId])
 
   const handleUpdatePost = (e) => {
     e.preventDefault()
-    instance.put(`/api/posts/${getPostId}`, {
+    instance.put(`/api/posts/${getUpdateId}`, {
       title,
       description,
       image,
@@ -106,7 +123,9 @@ const Articles = () => {
         <form onSubmit={handleUpdatePost} className="update-form">
           <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Title" />
           <input value={image} onChange={(e) => setImage(e.target.value)} type="url" placeholder="Image URL" />
-          <textarea value={description} onChange={(e) => setCategory(e.target.value)} placeholder="Description"></textarea>
+          {/* <textarea value={description} onChange={(e) => setCategory(e.target.value)} placeholder="Description"></textarea> */}
+        <ReactQuill modules={modules} theme="snow" value={description} onChange={setDescription} />
+
           <select defaultValue={"select"} onChange={(e) => setCategory(e.target.value)}>
             <option disabled value="select">Select post category</option>
             {
@@ -119,7 +138,7 @@ const Articles = () => {
           </select>
           <button type="submit">UPDATE POST</button>
         </form>
-          <button onClick={() => setUpdateModal(false)} className="close__update-modal"><IoIosCloseCircle /></button>
+        <button onClick={() => setUpdateModal(false)} className="close__update-modal"><IoIosCloseCircle /></button>
       </div>
 
 
