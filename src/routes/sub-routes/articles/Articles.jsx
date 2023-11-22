@@ -16,6 +16,7 @@ const Articles = () => {
   const { data } = useFetch("/api/categories")
 
   const [updateModal, setUpdateModal] = useState(false)
+  const [ModalBgWrapper, setModalBgWrapper] = useState(false)
   const [title, setTitle] = useState("")
   const [image, setImage] = useState("")
   const [description, setDescription] = useState("")
@@ -37,16 +38,17 @@ const Articles = () => {
       userOnly: true
     }
   };
-  console.log(getUpdateId);
+
   // UPDATE MODAL INPUTS 
   useEffect(() => {
     if (getUpdateId) {
-
       setUpdateModal(true)
+      setModalBgWrapper(true)
     }
   }, [getUpdateId])
 
   const handleUpdatePost = (e) => {
+    setUpdateModal(false)
     e.preventDefault()
     instance.put(`/api/posts/${getUpdateId}`, {
       title,
@@ -63,6 +65,7 @@ const Articles = () => {
   useEffect(() => {
     if (getPostId) {
       setCloseModal(true)
+      setModalBgWrapper(true)
     }
   }, [getPostId])
 
@@ -81,11 +84,8 @@ const Articles = () => {
   // DELETE POST
   const delBtn = useRef()
   const delBtnStyle = delBtn.current
-
   const handleDelete = (id) => {
-
     setBtnLoading(true)
-
     delBtnStyle.style = "opacity: 0.8; cursor: not-allowed;"
     console.log(id);
     instance.delete(`/api/posts/${id}`)
@@ -93,8 +93,11 @@ const Articles = () => {
       window.location.reload(true)
     }, 2000)
   }
-
-
+  // CLOSE ALL BG MODAL
+  const closeAllModal = () => {
+    setModalBgWrapper(false)
+    setUpdateModal(false)
+  }
   return (
     <>
       <div className='all__articles-wrapper'>
@@ -123,8 +126,7 @@ const Articles = () => {
         <form onSubmit={handleUpdatePost} className="update-form">
           <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Title" />
           <input value={image} onChange={(e) => setImage(e.target.value)} type="url" placeholder="Image URL" />
-          {/* <textarea value={description} onChange={(e) => setCategory(e.target.value)} placeholder="Description"></textarea> */}
-        <ReactQuill modules={modules} theme="snow" value={description} onChange={setDescription} />
+          <ReactQuill className="description" modules={modules} theme="snow" value={description} onChange={setDescription} />
 
           <select defaultValue={"select"} onChange={(e) => setCategory(e.target.value)}>
             <option disabled value="select">Select post category</option>
@@ -138,16 +140,16 @@ const Articles = () => {
           </select>
           <button type="submit">UPDATE POST</button>
         </form>
-        <button onClick={() => setUpdateModal(false)} className="close__update-modal"><IoIosCloseCircle /></button>
+        <button onClick={closeAllModal} className="close__update-modal"><IoIosCloseCircle /></button>
       </div>
 
 
       {/*Delete Modal */}
-      <div style={closeModal ? { display: "block" } : { display: "none" }} className="modal__bg-wrapper">
+      <div style={ModalBgWrapper ? { display: "block" } : { display: "none" }} className="modal__bg-wrapper">
         <div style={closeModal ? { display: "block", display: "grid" } : { display: "none" }} className="delete-modal">
           <p>Are you sure to Delete Post ?</p>
           <button ref={delBtn} onClick={() => handleDelete(getPostId)} className="article-delete-btn">Delete</button>
-          <button onClick={() => setCloseModal(false)} className="close-modal"><IoIosCloseCircle /></button>
+          <button onClick={() => { setCloseModal(false); setModalBgWrapper(false) }} className="close-modal"><IoIosCloseCircle /></button>
         </div>
         {/* Loading */}
         <div style={btnLoading ? { display: "block", cursor: "not-allowed" } : { display: "none" }} class="lds-ring"><div></div><div></div><div></div><div></div></div>
